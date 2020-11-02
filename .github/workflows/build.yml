@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: installing ballerina 1.2.9
+        run: |
+          curl https://dist.ballerina.io/downloads/1.2.9/ballerina-linux-installer-x64-1.2.9.deb
+          dpkg -i ballerina-linux-installer-x64-1.2.9.deb
       - name: Compile Java Dependencies
         run: |
           cd utils
