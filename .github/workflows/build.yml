@@ -12,7 +12,9 @@ jobs:
         run: |
           cd utils
           mvn install
+          cd ..
       - name: Build Ballerina Module
         run: |
           cd jms
           ballerina build -c -a
+          cd ..
