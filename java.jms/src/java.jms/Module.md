@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/wso2-ballerina/module-jms.svg?branch=master)](https://travis-ci.org/wso2-ballerina/module-jms)
+Connects to a JMS provider using Ballerina.
 
 ## Module overview
 
@@ -7,7 +7,7 @@ The `ballerina/java.jms` module provides an API to connect to an external JMS pr
 This module is created with minimal deviation from the JMS API to make it easy for the developers who are used to working 
  with the JMS API. This module is written to support both JMS 2.0 and JMS 1.0 API. 
  
- Currently, the following JMS API Classes are supported through this module.
+Currently, the following JMS API Classes are supported through this module.
  
  - Connection
  - Session
@@ -16,13 +16,13 @@ This module is created with minimal deviation from the JMS API to make it easy f
  - MessageConsumer
  - MessageProducer
  
-The following sections provide details on how to use the JMS connector.
-
-- [Compatibility](#compatibility)
-- [Samples](#samples)
-
+ The following sections provide details on how to use the JMS connector.
+ 
+ - [Compatibility](#compatibility)
+ - [Samples](#samples)
+ 
 ## Compatibility
-
+ 
 |  Ballerina Language Version |       JMS Module Version       |
 |:---------------------------:|:------------------------------:|
 |         1.0.x               |             0.6.x              |
@@ -71,7 +71,7 @@ public function main() returns error? {
 ### Asynchronous message consumer
 
 One of the key deviations from the JMS API was the asynchronous message consumption using message listeners. In 
-Ballerina transport listener, the concept is covered with the **service** type, hence we have used the Ballerina service to 
+Ballerina transport listener concept is covered with **service** type, hence we have used the Ballerina service to 
 implement the message listener. Following is a message listener example listening on a topic named *MyTopic*.
 
 ```ballerina
@@ -85,8 +85,8 @@ jms:Connection connection = check jms:createConnection({
 jms:Session session = check connection->createSession({acknowledgementMode: "AUTO_ACKNOWLEDGE"});
 jms:Destination topic = check session->createTopic("MyTopic");
 
-listener jms:MessageConsumer jmsConsumer = check session->createDurableSubscriber(topic, "sub-1");
-
+`listener jms:MessageConsumer jmsConsumer = check session->createDurableSubscriber(topic, "sub-1");
+`
 service messageListener on jmsConsumer {
 
    resource function onMessage(jms:Message message) {
