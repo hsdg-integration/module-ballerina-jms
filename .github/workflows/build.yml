@@ -8,5 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Compile Java Dependencies
+        run: |
+          cd utils
+          mvn install
+      - name: Build Ballerina Module
+        run: |
+          cd jms
+          ballerina build -c -a
