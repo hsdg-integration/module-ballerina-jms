@@ -1,4 +1,4 @@
 org_name = "hsdg"
-version = "0.0.1"
+version = "0.1.0"
 lockfile_version = "1.0.0"
-ballerina_version = "1.2.9"
+ballerina_version = "1.2.11"
