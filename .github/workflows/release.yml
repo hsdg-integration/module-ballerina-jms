@@ -2,16 +2,23 @@ name: CI
 on:
   push:
     branches: [ main ]
+    tags:
+      - v0.1.*
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: installing ballerina 1.2.11
+      - name: installing ballerina
         run: |
           wget https://dist.ballerina.io/downloads/1.2.11/ballerina-linux-installer-x64-1.2.11.deb
           sudo dpkg -i ballerina-linux-installer-x64-1.2.11.deb
+      - name: install ballerina central secret
+        run: |
+          mkdir .ballerina
+          echo "[central]" > .ballerina/Settings.toml
+          echo "accesstoken=\"$BALLERINA_CENTRAL\"" >> .ballerina/Settings.toml
       - name: Compile Java Dependencies
         run: |
           cd utils
@@ -21,4 +28,5 @@ jobs:
         run: |
           cd jms
           ballerina build -c -a
+          ballerina push -a
           cd ..
