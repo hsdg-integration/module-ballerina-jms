@@ -403,7 +403,8 @@ function createJmsTopic(handle session, handle topicName) returns handle | error
 } external;
 
 function createTemporaryJmsQueue(handle session) returns handle | error = @java:Method {
-    class: "org.ballerinalang.java.jms.JmsSessionUtils"
+    name: "createTemporaryQueue",
+    class: "javax.jms.Session"
 } external;
 
 function createTemporaryJmsTopic(handle session) returns handle | error = @java:Method {
