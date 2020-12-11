@@ -1,131 +1,345 @@
-// Copyright (c) 2019 WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-//
-// WSO2 Inc. licenses this file to you under the Apache License,
-// Version 2.0 (the "License"); you may not use this file except
-// in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing,
-// software distributed under the License is distributed on an
-// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-// KIND, either express or implied.  See the License for the
-// specific language governing permissions and limitations
-// under the License.
 
 import ballerina/java;
-import ballerina/log;
-import ballerina/observe;
 
-# Represents JMS Connection
+# Ballerina object mapping for Java interface `javax/jms/Connection`.
 #
-# + config - Used to store configurations related to a JMS Connection
-public type Connection client object {
+# + _Connection - The field that represents this Ballerina object, which is used for Java subtyping.
+# + _AutoCloseable - The field that represents the superclass object `AutoCloseable`.
+# + _Object - The field that represents the superclass object `Object`.
+@java:Binding {
+    class: "javax.jms.Connection"
+}
+public type Connection object {
 
-    public ConnectionConfiguration config = {};
-    private handle jmsConnection = JAVA_NULL;
+    *java:JObject;
 
-    # JMS Connection constructor
-    function __init(ConnectionConfiguration c) returns error?{
-        self.config = c;
-        return self.createConnection();
-    }
+    ConnectionT _Connection = ConnectionT;
+    AutoCloseableT _AutoCloseable = AutoCloseableT;
+    ObjectT _Object = ObjectT;
 
-    # Creates a connection with the broker reading the connection configurations.
+    # The init function of the Ballerina object mapping `javax/jms/Connection` Java class.
     #
-    # + return - Return error or nil
-    function createConnection() returns error? {
-        handle icf = java:fromString(self.config.initialContextFactory);
-        handle providerUrl = java:fromString(self.config.providerUrl);
-        handle factoryName = java:fromString(self.config.connectionFactoryName);
-
-        handle|error value = createJmsConnection(icf, providerUrl, factoryName, self.config.properties);
-        if (value is handle) {
-            self.jmsConnection = value;
-            registerAndIncrementCounter(new observe:Counter(TOTAL_JMS_CONNECTIONS));
-            log:printDebug("Successfully connected to broker.");
-            return;
-        } else {
-            log:printDebug("Error connecting to broker.");
-            return value;
-        }
+    # + obj - The `handle` value containing the Java reference of the object.
+    function __init(handle obj) {
+        self.jObj = obj;
     }
 
-    public remote function close() returns error? {
-        return closeJmsConnection(self.jmsConnection);
-    }
-
-    # Create a Session object, specifying transacted and acknowledgeMode
+    # The function to retrieve the string value of a Ballerina object mapping a Java class.
     #
-    # + sessionConfig - SessionConfiguration record consist with JMS session config
-    # + return - Returns the Session or an error if it fails.
-    public remote function createSession(SessionConfiguration sessionConfig) returns Session | error {
-        return new Session(self.jmsConnection, sessionConfig);
+    # + return - The `string` form of the object instance.
+    function toString() returns string {
+        return java:jObjToString(self.jObj);
     }
 
-    # Starts (or restarts) a connection's delivery of incoming messages.
-    # A call to start on a connection that has already been started is ignored.
-    public remote function start() {
-        error? err = startJmsConnection(self.jmsConnection);
-        if (err is error) {
-            log:printError("Error starting connection", err);
-        }
-        
-    }
-    
-    # Temporarily stops a connection's delivery of incoming messages.
-    # Delivery can be restarted using the connection's start method.
-    public remote function stop() {
-        error? err = stopJmsConnection(self.jmsConnection);
-        if (err is error) {
-            log:printError("Error stopping connection", err);
+    # The function that maps to the `close` method of `javax/jms/Connection`.
+    # 
+    # + return - The `error?` value returning from the Java mapping.
+    function close() returns error? {
+        error|() obj = javax_jms_Connection_close(self.jObj);
+        if (obj is error) {
+            JMSException e = JMSException(message = obj.reason(), cause = obj);
+            return e;
         }
     }
 
-    function getJmsConnection() returns handle {
-        return self.jmsConnection;
+    # The function that maps to the `createConnectionConsumer` method of `javax/jms/Connection`.
+    #
+    # + arg0 - The `Destination` value required to map with the Java method parameter.
+    # + arg1 - The `string` value required to map with the Java method parameter.
+    # + arg2 - The `ServerSessionPool` value required to map with the Java method parameter.
+    # + arg3 - The `int` value required to map with the Java method parameter.
+    # + return - The `ConnectionConsumer|JMSException` value returning from the Java mapping.
+    function createConnectionConsumer(Destination arg0, string arg1, ServerSessionPool arg2, int arg3) returns ConnectionConsumer|JMSException {
+        handle|error externalObj = javax_jms_Connection_createConnectionConsumer(self.jObj, arg0.jObj, java:fromString(arg1), arg2.jObj, arg3);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        ConnectionConsumer obj = new(externalObj);
+        return obj;
+        }
+    }
+
+    # The function that maps to the `createDurableConnectionConsumer` method of `javax/jms/Connection`.
+    #
+    # + arg0 - The `Topic` value required to map with the Java method parameter.
+    # + arg1 - The `string` value required to map with the Java method parameter.
+    # + arg2 - The `string` value required to map with the Java method parameter.
+    # + arg3 - The `ServerSessionPool` value required to map with the Java method parameter.
+    # + arg4 - The `int` value required to map with the Java method parameter.
+    # + return - The `ConnectionConsumer|JMSException` value returning from the Java mapping.
+    function createDurableConnectionConsumer(Topic arg0, string arg1, string arg2, ServerSessionPool arg3, int arg4) returns ConnectionConsumer|JMSException {
+        handle|error externalObj = javax_jms_Connection_createDurableConnectionConsumer(self.jObj, arg0.jObj, java:fromString(arg1), java:fromString(arg2), arg3.jObj, arg4);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        ConnectionConsumer obj = new(externalObj);
+        return obj;
+        }
+    }
+
+    # The function that maps to the `createSession` method of `javax/jms/Connection`.
+    # 
+    # + return - The `Session|JMSException` value returning from the Java mapping.
+    function createSession() returns Session|JMSException {
+        handle|error externalObj = javax_jms_Connection_createSession(self.jObj);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        Session obj = new(externalObj);
+        return obj;
+        }
+    }
+
+    # The function that maps to the `createSession` method of `javax/jms/Connection`.
+    #
+    # + arg0 - The `boolean` value required to map with the Java method parameter.
+    # + arg1 - The `int` value required to map with the Java method parameter.
+    # + return - The `Session|JMSException` value returning from the Java mapping.
+    function createSession2(boolean arg0, int arg1) returns Session|JMSException {
+        handle|error externalObj = javax_jms_Connection_createSession2(self.jObj, arg0, arg1);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        Session obj = new(externalObj);
+        return obj;
+        }
+    }
+
+    # The function that maps to the `createSession` method of `javax/jms/Connection`.
+    #
+    # + arg0 - The `int` value required to map with the Java method parameter.
+    # + return - The `Session|JMSException` value returning from the Java mapping.
+    function createSession3(int arg0) returns Session|JMSException {
+        handle|error externalObj = javax_jms_Connection_createSession3(self.jObj, arg0);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        Session obj = new(externalObj);
+        return obj;
+        }
+    }
+
+    # The function that maps to the `createSharedConnectionConsumer` method of `javax/jms/Connection`.
+    #
+    # + arg0 - The `Topic` value required to map with the Java method parameter.
+    # + arg1 - The `string` value required to map with the Java method parameter.
+    # + arg2 - The `string` value required to map with the Java method parameter.
+    # + arg3 - The `ServerSessionPool` value required to map with the Java method parameter.
+    # + arg4 - The `int` value required to map with the Java method parameter.
+    # + return - The `ConnectionConsumer|JMSException` value returning from the Java mapping.
+    function createSharedConnectionConsumer(Topic arg0, string arg1, string arg2, ServerSessionPool arg3, int arg4) returns ConnectionConsumer|JMSException {
+        handle|error externalObj = javax_jms_Connection_createSharedConnectionConsumer(self.jObj, arg0.jObj, java:fromString(arg1), java:fromString(arg2), arg3.jObj, arg4);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        ConnectionConsumer obj = new(externalObj);
+        return obj;
+        }
+    }
+
+    # The function that maps to the `createSharedDurableConnectionConsumer` method of `javax/jms/Connection`.
+    #
+    # + arg0 - The `Topic` value required to map with the Java method parameter.
+    # + arg1 - The `string` value required to map with the Java method parameter.
+    # + arg2 - The `string` value required to map with the Java method parameter.
+    # + arg3 - The `ServerSessionPool` value required to map with the Java method parameter.
+    # + arg4 - The `int` value required to map with the Java method parameter.
+    # + return - The `ConnectionConsumer|JMSException` value returning from the Java mapping.
+    function createSharedDurableConnectionConsumer(Topic arg0, string arg1, string arg2, ServerSessionPool arg3, int arg4) returns ConnectionConsumer|JMSException {
+        handle|error externalObj = javax_jms_Connection_createSharedDurableConnectionConsumer(self.jObj, arg0.jObj, java:fromString(arg1), java:fromString(arg2), arg3.jObj, arg4);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        ConnectionConsumer obj = new(externalObj);
+        return obj;
+        }
+    }
+
+    # The function that maps to the `getClientID` method of `javax/jms/Connection`.
+    # 
+    # + return - The `string?|JMSException` value returning from the Java mapping.
+    function getClientID() returns string?|JMSException {
+        handle|error externalObj = javax_jms_Connection_getClientID(self.jObj);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        return java:toString(externalObj);
+        }
+    }
+
+    # The function that maps to the `getExceptionListener` method of `javax/jms/Connection`.
+    # 
+    # + return - The `ExceptionListener|JMSException` value returning from the Java mapping.
+    function getExceptionListener() returns ExceptionListener|JMSException {
+        handle|error externalObj = javax_jms_Connection_getExceptionListener(self.jObj);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        ExceptionListener obj = new(externalObj);
+        return obj;
+        }
+    }
+
+    # The function that maps to the `getMetaData` method of `javax/jms/Connection`.
+    # 
+    # + return - The `ConnectionMetaData|JMSException` value returning from the Java mapping.
+    function getMetaData() returns ConnectionMetaData|JMSException {
+        handle|error externalObj = javax_jms_Connection_getMetaData(self.jObj);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        ConnectionMetaData obj = new(externalObj);
+        return obj;
+        }
+    }
+
+    # The function that maps to the `setClientID` method of `javax/jms/Connection`.
+    #
+    # + arg0 - The `string` value required to map with the Java method parameter.
+    # + return - The `error?` value returning from the Java mapping.
+    function setClientID(string arg0) returns error? {
+        error|() obj = javax_jms_Connection_setClientID(self.jObj, java:fromString(arg0));
+        if (obj is error) {
+            JMSException e = JMSException(message = obj.reason(), cause = obj);
+            return e;
+        }
+    }
+
+    # The function that maps to the `setExceptionListener` method of `javax/jms/Connection`.
+    #
+    # + arg0 - The `ExceptionListener` value required to map with the Java method parameter.
+    # + return - The `error?` value returning from the Java mapping.
+    function setExceptionListener(ExceptionListener arg0) returns error? {
+        error|() obj = javax_jms_Connection_setExceptionListener(self.jObj, arg0.jObj);
+        if (obj is error) {
+            JMSException e = JMSException(message = obj.reason(), cause = obj);
+            return e;
+        }
+    }
+
+    # The function that maps to the `start` method of `javax/jms/Connection`.
+    # 
+    # + return - The `error?` value returning from the Java mapping.
+    function 'start() returns error? {
+        error|() obj = javax_jms_Connection_start(self.jObj);
+        if (obj is error) {
+            JMSException e = JMSException(message = obj.reason(), cause = obj);
+            return e;
+        }
+    }
+
+    # The function that maps to the `stop` method of `javax/jms/Connection`.
+    # 
+    # + return - The `error?` value returning from the Java mapping.
+    function stop() returns error? {
+        error|() obj = javax_jms_Connection_stop(self.jObj);
+        if (obj is error) {
+            JMSException e = JMSException(message = obj.reason(), cause = obj);
+            return e;
+        }
     }
 };
 
-# Configurations related to a JMS connection
-#
-# + initialContextFactory - JMS provider specific inital context factory
-# + providerUrl - JMS provider specific provider URL used to configure a connection
-# + connectionFactoryName - JMS connection factory to be used in creating JMS connections
-# + username - Username for the JMS connection
-# + password - Password for the JMS connection
-# + properties - Additional properties use in initializing the initial context
-public type ConnectionConfiguration record {|
-    string initialContextFactory = "wso2mbInitialContextFactory";
-    string providerUrl = "amqp://admin:admin@ballerina/default?brokerlist='tcp://localhost:5672'";
-    string connectionFactoryName = "ConnectionFactory";
-    string? username = ();
-    string? password = ();
-    map<string> properties = {};
-|};
+// External interop functions for mapping public methods.
 
-public function createConnection(ConnectionConfiguration c) returns Connection|error{
-    return new Connection(c);
-}
-
-function createJmsConnection(handle initialContextFactory, handle providerUrl, handle connectionFactoryName,
-                             map<string> otherPropeties) returns handle | error = @java:Method {
-    class: "org.ballerinalang.java.jms.JmsConnectionUtils"
-} external;
-
-function startJmsConnection(handle jmsConnection) returns error? = @java:Method {
-    name: "start",
-    class: "javax.jms.Connection"
-} external;
-
-
-function stopJmsConnection(handle jmsConnection) returns error? = @java:Method {
-    name: "stop",
-    class: "javax.jms.Connection"
-} external;
-
-function closeJmsConnection(handle jmsConnection) returns error? = @java:Method {
+function javax_jms_Connection_close(handle receiver) returns error? = @java:Method {
     name: "close",
-    class: "javax.jms.Connection"
+    class: "javax.jms.Connection",
+    paramTypes: []
 } external;
+
+function javax_jms_Connection_createConnectionConsumer(handle receiver, handle arg0, handle arg1, handle arg2, int arg3) returns handle|error = @java:Method {
+    name: "createConnectionConsumer",
+    class: "javax.jms.Connection",
+    paramTypes: ["javax.jms.Destination", "java.lang.String", "javax.jms.ServerSessionPool", "int"]
+} external;
+
+function javax_jms_Connection_createDurableConnectionConsumer(handle receiver, handle arg0, handle arg1, handle arg2, handle arg3, int arg4) returns handle|error = @java:Method {
+    name: "createDurableConnectionConsumer",
+    class: "javax.jms.Connection",
+    paramTypes: ["javax.jms.Topic", "java.lang.String", "java.lang.String", "javax.jms.ServerSessionPool", "int"]
+} external;
+
+function javax_jms_Connection_createSession(handle receiver) returns handle|error = @java:Method {
+    name: "createSession",
+    class: "javax.jms.Connection",
+    paramTypes: []
+} external;
+
+function javax_jms_Connection_createSession2(handle receiver, boolean arg0, int arg1) returns handle|error = @java:Method {
+    name: "createSession",
+    class: "javax.jms.Connection",
+    paramTypes: ["boolean", "int"]
+} external;
+
+function javax_jms_Connection_createSession3(handle receiver, int arg0) returns handle|error = @java:Method {
+    name: "createSession",
+    class: "javax.jms.Connection",
+    paramTypes: ["int"]
+} external;
+
+function javax_jms_Connection_createSharedConnectionConsumer(handle receiver, handle arg0, handle arg1, handle arg2, handle arg3, int arg4) returns handle|error = @java:Method {
+    name: "createSharedConnectionConsumer",
+    class: "javax.jms.Connection",
+    paramTypes: ["javax.jms.Topic", "java.lang.String", "java.lang.String", "javax.jms.ServerSessionPool", "int"]
+} external;
+
+function javax_jms_Connection_createSharedDurableConnectionConsumer(handle receiver, handle arg0, handle arg1, handle arg2, handle arg3, int arg4) returns handle|error = @java:Method {
+    name: "createSharedDurableConnectionConsumer",
+    class: "javax.jms.Connection",
+    paramTypes: ["javax.jms.Topic", "java.lang.String", "java.lang.String", "javax.jms.ServerSessionPool", "int"]
+} external;
+
+function javax_jms_Connection_getClientID(handle receiver) returns handle|error = @java:Method {
+    name: "getClientID",
+    class: "javax.jms.Connection",
+    paramTypes: []
+} external;
+
+function javax_jms_Connection_getExceptionListener(handle receiver) returns handle|error = @java:Method {
+    name: "getExceptionListener",
+    class: "javax.jms.Connection",
+    paramTypes: []
+} external;
+
+function javax_jms_Connection_getMetaData(handle receiver) returns handle|error = @java:Method {
+    name: "getMetaData",
+    class: "javax.jms.Connection",
+    paramTypes: []
+} external;
+
+function javax_jms_Connection_setClientID(handle receiver, handle arg0) returns error? = @java:Method {
+    name: "setClientID",
+    class: "javax.jms.Connection",
+    paramTypes: ["java.lang.String"]
+} external;
+
+function javax_jms_Connection_setExceptionListener(handle receiver, handle arg0) returns error? = @java:Method {
+    name: "setExceptionListener",
+    class: "javax.jms.Connection",
+    paramTypes: ["javax.jms.ExceptionListener"]
+} external;
+
+function javax_jms_Connection_start(handle receiver) returns error? = @java:Method {
+    name: "start",
+    class: "javax.jms.Connection",
+    paramTypes: []
+} external;
+
+function javax_jms_Connection_stop(handle receiver) returns error? = @java:Method {
+    name: "stop",
+    class: "javax.jms.Connection",
+    paramTypes: []
+} external;
+
+

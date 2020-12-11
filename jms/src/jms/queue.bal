@@ -1,55 +1,56 @@
-// Copyright (c) 2019 WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-//
-// WSO2 Inc. licenses this file to you under the Apache License,
-// Version 2.0 (the "License"); you may not use this file except
-// in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing,
-// software distributed under the License is distributed on an
-// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-// KIND, either express or implied.  See the License for the
-// specific language governing permissions and limitations
-// under the License.
 
 import ballerina/java;
 
-# Represent the JMS queue
+# Ballerina object mapping for Java interface `javax/jms/Queue`.
+#
+# + _Queue - The field that represents this Ballerina object, which is used for Java subtyping.
+# + _Destination - The field that represents the superclass object `Destination`.
+# + _Object - The field that represents the superclass object `Object`.
+@java:Binding {
+    class: "javax.jms.Queue"
+}
 public type Queue object {
 
-    // Add a reference to the `Destination` object type.
-    *Destination;
+    *java:JObject;
 
-    # Initialized a `Queue` object.
+    QueueT _Queue = QueueT;
+    DestinationT _Destination = DestinationT;
+    ObjectT _Object = ObjectT;
+
+    # The init function of the Ballerina object mapping `javax/jms/Queue` Java class.
     #
-    # + handle - The java reference to the jms text message.
-    function __init(handle queue) {
-        self.jmsDestination = queue;
+    # + obj - The `handle` value containing the Java reference of the object.
+    function __init(handle obj) {
+        self.jObj = obj;
     }
 
-    # Get the JMS queue
+    # The function to retrieve the string value of a Ballerina object mapping a Java class.
     #
-    # + return - Returns the java reference to the jms queue
-    function getJmsDestination() returns handle {
-        return self.jmsDestination;
+    # + return - The `string` form of the object instance.
+    function toString() returns string {
+        return java:jObjToString(self.jObj);
     }
 
-    # Gets the name of this queue.
-    #
-    # + return - Returns the string value or an error if it fails.
-    public function getQueueName() returns string | error? {
-        handle|error val = getQueueName(self.jmsDestination);
-        if (val is handle) {
-            return java:toString(val);
-        } else {
-            return val;
+    # The function that maps to the `getQueueName` method of `javax/jms/Queue`.
+    # 
+    # + return - The `string?|JMSException` value returning from the Java mapping.
+    function getQueueName() returns string?|JMSException {
+        handle|error externalObj = javax_jms_Queue_getQueueName(self.jObj);
+        if (externalObj is error) {
+            JMSException e = JMSException(message = externalObj.reason(), cause = externalObj);
+            return e;
+        } else { 
+        return java:toString(externalObj);
         }
     }
-
 };
 
-function getQueueName(handle destination) returns handle | error = @java:Method {
-    class: "javax.jms.Queue"
+// External interop functions for mapping public methods.
+
+function javax_jms_Queue_getQueueName(handle receiver) returns handle|error = @java:Method {
+    name: "getQueueName",
+    class: "javax.jms.Queue",
+    paramTypes: []
 } external;
+
+

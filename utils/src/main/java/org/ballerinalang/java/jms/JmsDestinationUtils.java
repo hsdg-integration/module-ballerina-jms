@@ -44,16 +44,16 @@ public class JmsDestinationUtils {
      * @return Ballerina Tuple represent {@link javax.jms.Destination}
      */
     public static String getDestinationType(Destination destination) {
-        String destinationType = null;
+        String destinationpublic type = null;
 
         if (destination instanceof TemporaryQueue) {
-            destinationType = Constants.DESTINATION_TYPE_TEMP_QUEUE;
+            destinationpublic type = Constants.DESTINATION_TYPE_TEMP_QUEUE;
         } else if (destination instanceof TemporaryTopic) {
-            destinationType = Constants.DESTINATION_TYPE_TEMP_TOPIC;
+            destinationpublic type = Constants.DESTINATION_TYPE_TEMP_TOPIC;
         } else if (destination instanceof Queue) {
-            destinationType = Constants.DESTINATION_TYPE_QUEUE;
+            destinationpublic type = Constants.DESTINATION_TYPE_QUEUE;
         } else if (destination instanceof Topic) {
-            destinationType = Constants.DESTINATION_TYPE_TOPIC;
+            destinationpublic type = Constants.DESTINATION_TYPE_TOPIC;
         }
 
         return destinationType;

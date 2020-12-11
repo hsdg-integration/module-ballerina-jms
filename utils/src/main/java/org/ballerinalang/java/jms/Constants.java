@@ -53,9 +53,9 @@ public class Constants {
     public static final String ALIAS_CONNECTION_FACTORY_NAME = "connectionFactoryName";
 
     /**
-     * Type of the connection factory. Whether queue or topic connection factory.
+     * public type of the connection factory. Whether queue or topic connection factory.
      */
-    public static final String ALIAS_DESTINATION_TYPE = "destinationType";
+    public static final String ALIAS_DESTINATION_public type = "destinationType";
     /**
      * jms destination.
      */
@@ -85,7 +85,7 @@ public class Constants {
     private static Map<String, String> mappingParameters;
 
     static final String PARAM_CONNECTION_FACTORY_JNDI_NAME = "transport.jms.ConnectionFactoryJNDIName";
-    public static final String PARAM_CONNECTION_FACTORY_TYPE = "transport.jms.ConnectionFactoryType";
+    public static final String PARAM_CONNECTION_FACTORY_public type = "transport.jms.ConnectionFactoryType";
     public static final String PARAM_DESTINATION_NAME = "transport.jms.Destination";
     public static final String PARAM_ACK_MODE = "transport.jms.SessionAcknowledgement";
     public static final String PARAM_DURABLE_SUB_ID = "transport.jms.DurableSubscriberName";

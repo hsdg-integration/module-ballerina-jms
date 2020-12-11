@@ -108,11 +108,11 @@ public class JmsMessageListenerUtils {
         }
 
         /**
-         * With compiler plugin we guarantee that there are more than 1 resource in a message type specific scenario
+         * With compiler plugin we guarantee that there are more than 1 resource in a message public type specific scenario
          * with the inclusion of mandatory onOtherMessage function.
          *
          * @param functions functions list
-         * @return true if there are message type specific functions found.
+         * @return true if there are message public type specific functions found.
          */
         private boolean isMessageTypeSpecificFunction(AttachedFunction[] functions) {
             return functions.length > 1;
