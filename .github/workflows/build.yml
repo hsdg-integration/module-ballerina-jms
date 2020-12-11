@@ -12,11 +12,6 @@ jobs:
         run: |
           wget https://dist.ballerina.io/downloads/1.2.11/ballerina-linux-installer-x64-1.2.11.deb
           sudo dpkg -i ballerina-linux-installer-x64-1.2.11.deb
-      - name: Compile Java Dependencies
-        run: |
-          cd utils
-          mvn install
-          cd ..
       - name: Build Ballerina Module
         run: |
           cd jms
