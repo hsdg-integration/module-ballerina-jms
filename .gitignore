@@ -1,6 +1,6 @@
 
 .DS_Store
-utils/target/
-jms/target/
+target/
 ballerina-internal.log
 bindgen classes.txt
+Ballerina.lock

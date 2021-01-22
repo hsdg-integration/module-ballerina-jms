@@ -13,7 +13,7 @@ target = "java8"
 
 [[platform.libraries]]
 module = "jms"
-path = "../libs/javax.jms-api-2.0.1.jar"
+path = "libs/javax.jms-api-2.0.1.jar"
 artifactId = "javax.jms-api"
 version = "2.0.1"
 groupId = "javax.jms"
