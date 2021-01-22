@@ -2,3 +2,5 @@
 .DS_Store
 utils/target/
 jms/target/
+ballerina-internal.log
+bindgen classes.txt

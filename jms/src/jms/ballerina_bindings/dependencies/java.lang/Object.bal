@@ -15,7 +15,7 @@ import ballerina/java;
 @java:Binding {
     class: "java.lang.Object"
 }
-public type Object object {
+type Object object {
 
     *java:JObject;
 

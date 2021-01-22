@@ -16,7 +16,7 @@ import ballerina/java;
 @java:Binding {
     class: "java.util.Enumeration"
 }
-public type Enumeration object {
+type Enumeration object {
 
     *java:JObject;
 

@@ -13,20 +13,20 @@ import ballerina/java;
 #
 # + _Class - The field that represents this Ballerina object, which is used for Java subtyping.
 # + _Serializable - The field that represents the superclass object `Serializable`.
-# + _type - The field that represents the superclass object `Type`.
+# + _Type - The field that represents the superclass object `Type`.
 # + _AnnotatedElement - The field that represents the superclass object `AnnotatedElement`.
 # + _Object - The field that represents the superclass object `Object`.
 # + _GenericDeclaration - The field that represents the superclass object `GenericDeclaration`.
 @java:Binding {
     class: "java.lang.Class"
 }
-public type Class object {
+type Class object {
 
     *java:JObject;
 
     ClassT _Class = ClassT;
     SerializableT _Serializable = SerializableT;
-    TypeT _type = TypeT;
+    TypeT _Type = TypeT;
     AnnotatedElementT _AnnotatedElement = AnnotatedElementT;
     ObjectT _Object = ObjectT;
     GenericDeclarationT _GenericDeclaration = GenericDeclarationT;
